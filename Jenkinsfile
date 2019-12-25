@@ -1,6 +1,6 @@
 // 需要在jenkins的Credentials设置中配置jenkins-harbor-creds、jenkins-k8s-config参数
 pipeline {
-    agent any
+    agent { label 'haimaxy-jnlp'}
     environment {
         //HARBOR_CREDS = credentials('jenkins-harbor-creds')
         K8S_CONFIG = credentials('jenkins-k8s-config')
