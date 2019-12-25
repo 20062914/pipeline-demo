@@ -1,6 +1,6 @@
 // 需要在jenkins的Credentials设置中配置jenkins-harbor-creds、jenkins-k8s-config参数
 pipeline {
-    agent { label 'haimaxy-jnlp'}
+    agent any
     environment {
         //HARBOR_CREDS = credentials('jenkins-harbor-creds')
         K8S_CONFIG = credentials('jenkins-k8s-config')
@@ -15,7 +15,8 @@ pipeline {
     stages {
         stage('Maven Build') {
             when { expression { env.GIT_TAG != null } }
-            agent {
+            agent { 
+                label 'haimaxy-jnlp'
                 docker {
                     image 'maven:3.6.3-jdk-14'
                     args '-v $HOME/.m2:/root/.m2'
@@ -33,7 +34,7 @@ pipeline {
                     expression { env.GIT_TAG != null }
                 }
             }
-            agent any
+            agent { label 'haimaxy-jnlp' }
             steps {
                 unstash 'app'
                // sh "docker login -u ${HARBOR_CREDS_USR} -p ${HARBOR_CREDS_PSW} ${params.HARBOR_HOST}"
@@ -50,6 +51,7 @@ pipeline {
                 }
             }
             agent {
+                label 'haimaxy-jnlp'
                 docker {
                     image 'lwolf/helm-kubectl-docker'
                 }
