@@ -15,10 +15,10 @@ pipeline {
     stages {
         stage('Maven Build') {
             when { expression { env.GIT_TAG != null } }
-            agent { 
-                label 'haimaxy-jnlp'
+            agent {
                 docker {
                     image 'maven:3.6.3-jdk-14'
+                    label 'haimaxy-jnlp'
                     args '-v $HOME/.m2:/root/.m2'
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
                     expression { env.GIT_TAG != null }
                 }
             }
-            agent { label 'haimaxy-jnlp' }
+            agent {label 'haimaxy-jnlp'}
             steps {
                 unstash 'app'
                // sh "docker login -u ${HARBOR_CREDS_USR} -p ${HARBOR_CREDS_PSW} ${params.HARBOR_HOST}"
@@ -51,9 +51,9 @@ pipeline {
                 }
             }
             agent {
-                label 'haimaxy-jnlp'
                 docker {
                     image 'lwolf/helm-kubectl-docker'
+                    label 'haimaxy-jnlp'
                 }
             }
             steps {
