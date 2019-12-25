@@ -35,7 +35,7 @@ pipeline {
                 }
             }
             agent {label 'haimaxy-jnlp'}
-            steps {
+            steps { 
                 unstash 'app'
                 sh "cat /etc/docker/daemon.json"
                // sh "docker login -u ${HARBOR_CREDS_USR} -p ${HARBOR_CREDS_PSW} ${params.HARBOR_HOST}"
