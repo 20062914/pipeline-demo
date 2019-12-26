@@ -36,7 +36,7 @@ pipeline {
             }
             agent {label 'haimaxy-jnlp'}
             steps { 
-                unstash 'app'
+                //unstash 'app'
                 sh "mkdir /etc/docker"
                 sh "echo '{  insecure-registries: \"[$HARBOR_HOST]\"   }' >> /etc/docker/daemon.json"
                 sh "cat /etc/docker/daemon.json"
