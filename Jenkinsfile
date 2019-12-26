@@ -13,7 +13,7 @@ pipeline {
         string(name: 'K8S_NAMESPACE', defaultValue: 'default', description: 'k8s的namespace名称')
     }
     stages {
-        stage('Maven Build') {
+/*        stage('Maven Build') {
             when { expression { env.GIT_TAG != null } }
             agent {
                 docker {
@@ -27,7 +27,7 @@ pipeline {
                 stash includes: 'target/*.jar', name: 'app'
             }
 
-        }
+        }*/
         stage('Docker Build') {
             when { 
                 allOf {
