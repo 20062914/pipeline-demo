@@ -13,7 +13,7 @@ pipeline {
         string(name: 'K8S_NAMESPACE', defaultValue: 'default', description: 'k8s的namespace名称')
     }
     stages {
-/*        stage('Maven Build') {
+        stage('Maven Build') {
             when { expression { env.GIT_TAG != null } }
             agent {
                 docker {
@@ -27,7 +27,7 @@ pipeline {
                 stash includes: 'target/*.jar', name: 'app'
             }
 
-        }*/
+        }
         stage('Docker Build') {
             when { 
                 allOf {
@@ -37,8 +37,8 @@ pipeline {
             agent {label 'haimaxy-jnlp'}
             steps { 
                 //unstash 'app'
-                sh "sleep 130"
                // sh "docker login -u ${HARBOR_CREDS_USR} -p ${HARBOR_CREDS_PSW} ${params.HARBOR_HOST}"
+                sh ""
                 sh "docker build --build-arg JAR_FILE=`ls target/*.jar |cut -d '/' -f2` -t ${params.HARBOR_HOST}/${params.DOCKER_IMAGE}:${GIT_TAG} ."
                 sh "docker push ${params.HARBOR_HOST}/${params.DOCKER_IMAGE}:${GIT_TAG}"
                 sh "docker rmi ${params.HARBOR_HOST}/${params.DOCKER_IMAGE}:${GIT_TAG}"
