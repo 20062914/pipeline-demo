@@ -37,11 +37,7 @@ pipeline {
             agent {label 'haimaxy-jnlp'}
             steps { 
                 //unstash 'app'
-                sh "mkdir /etc/docker"
-                sh "echo '{  insecure-registries: \"[$HARBOR_HOST]\"   }' >> /etc/docker/daemon.json"
-                sh "cat /etc/docker/daemon.json"
-                sh "systemctl daemon-reload "
-                sh "systemctl restart docker "
+                sh "sleep 130"
                // sh "docker login -u ${HARBOR_CREDS_USR} -p ${HARBOR_CREDS_PSW} ${params.HARBOR_HOST}"
                 sh "docker build --build-arg JAR_FILE=`ls target/*.jar |cut -d '/' -f2` -t ${params.HARBOR_HOST}/${params.DOCKER_IMAGE}:${GIT_TAG} ."
                 sh "docker push ${params.HARBOR_HOST}/${params.DOCKER_IMAGE}:${GIT_TAG}"
